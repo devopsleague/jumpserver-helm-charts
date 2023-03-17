@@ -11,8 +11,8 @@ fullnameOverride: ""
 ## @param global.redis.password Global Redis&trade; password (overrides `auth.password`)
 ##
 global:
-  imageRegistry: "docker.io"
-  imageTag: v2.28.4
+  imageRegistry: "ghcr.io"
+  imageTag: v3.1.0
   ## E.g.
   #  imagePullSecrets:
   #  - myRegistryKeySecretName
@@ -85,7 +85,7 @@ core:
   image:
     registry: docker.io
     repository: jumpserver/core
-    tag: v2.28.4
+    tag: v3.1.0
     pullPolicy: IfNotPresent
 
   command: []
@@ -123,8 +123,6 @@ core:
     type: ClusterIP
     web:
       port: 8080
-    ws:
-      port: 8070
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -143,7 +141,8 @@ core:
     accessModes:
       - ReadWriteMany
     size: 100Gi
-    # annotations: {}
+    annotations:
+      "helm.sh/resource-policy": keep
     finalizers:
       - kubernetes.io/pvc-protection
     # subPath: ""
@@ -174,7 +173,7 @@ koko:
   image:
     registry: docker.io
     repository: jumpserver/koko
-    tag: v2.28.4
+    tag: v3.1.0
     pullPolicy: IfNotPresent
 
   command: []
@@ -234,7 +233,8 @@ koko:
     accessModes:
       - ReadWriteMany
     size: 10Gi
-    # annotations: {}
+    annotations:
+      "helm.sh/resource-policy": keep
     finalizers:
       - kubernetes.io/pvc-protection
     # subPath: ""
@@ -265,7 +265,7 @@ lion:
   image:
     registry: docker.io
     repository: jumpserver/lion
-    tag: v2.28.4
+    tag: v3.1.0
     pullPolicy: IfNotPresent
 
   command: []
@@ -325,7 +325,8 @@ lion:
     accessModes:
       - ReadWriteMany
     size: 50Gi
-    # annotations: {}
+    annotations:
+      "helm.sh/resource-policy": keep
     finalizers:
       - kubernetes.io/pvc-protection
     # subPath: ""
@@ -356,7 +357,7 @@ magnus:
   image:
     registry: docker.io
     repository: jumpserver/magnus
-    tag: v2.28.4
+    tag: v3.1.0
     pullPolicy: IfNotPresent
 
   command: []
@@ -386,7 +387,16 @@ magnus:
 
   service:
     type: ClusterIP
-    ports: 30000-30100
+    mysql:
+      port: 33061
+    mariadb:
+      port: 33062
+    redis:
+      port: 63790
+    postgresql:
+      port: 54320
+    oracle:
+      ports: 30000-30100
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -405,7 +415,8 @@ magnus:
     accessModes:
       - ReadWriteMany
     size: 10Gi
-    # annotations: {}
+    annotations:
+      "helm.sh/resource-policy": keep
     finalizers:
       - kubernetes.io/pvc-protection
     # subPath: ""
@@ -437,7 +448,7 @@ omnidb:
   image:
     registry: registry.fit2cloud.com
     repository: jumpserver/omnidb
-    tag: v2.28.4
+    tag: v3.1.0
     pullPolicy: IfNotPresent
 
   command: []
@@ -487,7 +498,8 @@ omnidb:
     accessModes:
       - ReadWriteMany
     size: 10Gi
-    # annotations: {}
+    annotations:
+      "helm.sh/resource-policy": keep
     finalizers:
       - kubernetes.io/pvc-protection
     # subPath: ""
@@ -516,7 +528,7 @@ razor:
   image:
     registry: registry.fit2cloud.com
     repository: jumpserver/razor
-    tag: v2.28.4
+    tag: v3.1.0
     pullPolicy: IfNotPresent
 
   command: []
@@ -566,7 +578,8 @@ razor:
     accessModes:
       - ReadWriteMany
     size: 50Gi
-    # annotations: {}
+    annotations:
+      "helm.sh/resource-policy": keep
     finalizers:
       - kubernetes.io/pvc-protection
     # subPath: ""
@@ -593,7 +606,7 @@ web:
   image:
     registry: docker.io
     repository: jumpserver/web
-    tag: v2.28.4
+    tag: v3.1.0
     pullPolicy: IfNotPresent
 
   command: []
@@ -647,7 +660,8 @@ web:
     accessModes:
       - ReadWriteMany
     size: 1Gi
-    # annotations: {}
+    annotations:
+      "helm.sh/resource-policy": keep
     finalizers:
       - kubernetes.io/pvc-protection
     # subPath: ""
